@@ -11,9 +11,9 @@
             votre article :</label>
           <textarea v-model="content" name="content" id="textarea_articlecreated" cols="30" rows="10" minlength="10"
             maxlength="1000" required></textarea>
-          <p class="formApp__message" v-if="articlepublished.status === 'on'">
+          <p class="formApp__message" v-if="articlePublished.status === 'on'">
             {{
-                articlepublished.message
+                articlePublished.message
             }}
           </p>
           <ButtonApp class="buttonApp--blue-white buttonApp--flex-end buttonApp--changedpadding"
@@ -63,7 +63,7 @@ onUpdated(function () {
 type ResCreateArticle = {
   message?: string;
 }
-const articlepublished = reactive({
+const articlePublished = reactive({
   status: 'off',
   message: ''
 })
@@ -72,28 +72,28 @@ function sendArticle() {
 
   if (title.value && content.value) {
     if (route.params.id) {
-      axios.put(import.meta.env.VITE_URL_API + 'api/auth/article/update', {
+      axios.put(import.meta.env.VITE_URL_API + 'api/auth/article', {
         newtitle: title.value,
         newcontent: content.value,
         idarticle: Number(route.params.id)
-      }, { headers: { 'Authorization': store.getauthorization } })
+      }, { headers: { 'Authorization': store.getAuthorization } })
         .then((res: ResCustom<ResCreateArticle>) => {
           if (res.data.message) {
-            articlepublished.status = 'on';
-            articlepublished.message = res.data.message;
+            articlePublished.status = 'on';
+            articlePublished.message = res.data.message;
             router.push('/socialapp/thread');
           }
         })
 
     } else {
-      axios.post(import.meta.env.VITE_URL_API + 'api/auth/article/create', {
+      axios.post(import.meta.env.VITE_URL_API + 'api/auth/article', {
         title: title.value,
         content: content.value
-      }, { headers: { 'Authorization': store.getauthorization } })
+      }, { headers: { 'Authorization': store.getAuthorization } })
         .then((res: ResCustom<ResCreateArticle>) => {
           if (res.data.message) {
-            articlepublished.status = 'on';
-            articlepublished.message = res.data.message;
+            articlePublished.status = 'on';
+            articlePublished.message = res.data.message;
             router.push('/socialapp/thread');
           }
         })

@@ -20,7 +20,7 @@ import { RouterView } from 'vue-router'
   background-color: white;
 }
 
-.linktoswitch {
+.linkToSwitch {
   margin-top: 25px;
   margin-bottom: 5px;
   font-size: 13px;

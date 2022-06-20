@@ -30,7 +30,7 @@
 
                                 <ButtonApp class="button-app--white" title="Créer un compte"></ButtonApp>
                         </form>
-                        <RouterLink class="linktoswitch" to="/">Déjà un compte? Se connecter</RouterLink>
+                        <RouterLink class="linkToSwitch" to="/">Déjà un compte? Se connecter</RouterLink>
                 </FormCardApp>
         </div>
 </template>

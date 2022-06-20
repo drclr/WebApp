@@ -1,6 +1,6 @@
 <template>
-  <CardArticle v-for="i in storeArticles.articles" :idarticlewriter="i.idarticlewriter" :idArticle="i.idArticle"
-    :key="i.id_iteration" :title="i.title" :content="i.content" :writer="i.writer" :date="i.date"></CardArticle>
+  <CardArticle v-for="i in storeArticles.articles" :idArticleWriter="i.idArticleWriter" :idArticle="i.idArticle"
+    :key="i.idIteration" :title="i.title" :content="i.content" :writer="i.writer" :date="i.date"></CardArticle>
 </template>
 
 <script setup lang="ts">

@@ -1,22 +1,15 @@
 <template>
   <v-app id="v-app">
     <v-app-bar app>
-      <img src="\src\assets\icon-left-font-monochrome-black.svg" alt="logo" id="v-app_bar__logo" />
+      <h1 id="title">
+        ShareWhatMatters
+      </h1>
     </v-app-bar>
-
-
     <v-main>
-
       <router-view />
     </v-main>
   </v-app>
 </template>
-<!--
-
-<script lang="ts">
-
-</script>
--->
 
 
 <style lang="scss">
@@ -27,15 +20,11 @@
 
 }
 
-#v-app_bar__logo {
-
-  margin: auto;
-  width: 200px;
-
-  margin-left: 10px;
-
-
+#title {
+  font-size: 25px;
+  color: var(--second-color);
 }
+
 
 #app {
   text-align: center;

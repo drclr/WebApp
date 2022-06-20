@@ -35,7 +35,7 @@ export const useStoreComments = defineStore({
   } as StateComments),
   actions: {
     getCommentsOneArticle(idArticle: number) {
-      axios.get(import.meta.env.VITE_URL_API + 'api/auth/comment/all/article/' + idArticle, { headers: { 'Authorization': store.getauthorization } })
+      axios.get(import.meta.env.VITE_URL_API + 'api/auth/articles/' + idArticle + '/comments', { headers: { 'Authorization': store.getAuthorization } })
         .then((res: ResCustom<DataTabObjectComments>) => {
           this.$reset();
           for (const i in res.data) {
@@ -52,8 +52,8 @@ export const useStoreComments = defineStore({
         });
     },
     supprComment(idComment: number) {
-      axios.delete(import.meta.env.VITE_URL_API + 'api/auth/comment/delete', {
-        headers: { 'Authorization': store.getauthorization },
+      axios.delete(import.meta.env.VITE_URL_API + 'api/auth/comment', {
+        headers: { 'Authorization': store.getAuthorization },
         data: { idComment: idComment }
       })
         .then(() => {
@@ -77,9 +77,9 @@ export const useStoreComments = defineStore({
       this.CommentsOneArticle.unshift(C);
     },
     updateOneComment(idComment: number, content: string) {
-      const C = this.CommentsOneArticle.find(e => e.id === idComment);
-      if (C) {
-        this.CommentsOneArticle[C.idIteration].content = content;
+      const CurrentComment = this.CommentsOneArticle.find(e => e.id === idComment);
+      if (CurrentComment) {
+        this.CommentsOneArticle[CurrentComment.idIteration].content = content;
       }
 
     }

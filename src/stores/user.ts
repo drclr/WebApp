@@ -45,7 +45,7 @@ export const useStoreUser = defineStore({
                 };
         },
         getters: {
-                getauthorization(): string { return 'Bearer ' + this.token },
+                getAuthorization(): string { return 'Bearer ' + this.token },
                 getName(): string | undefined { return this.firstname && this.lastname ? this.firstname + ' ' + this.lastname : undefined },
                 getInitials(): string | undefined {
                         return this.firstname && this.lastname ? this.firstname.charAt(0) + this.lastname.charAt(0) : undefined
@@ -87,9 +87,10 @@ export const useStoreUser = defineStore({
                 loginAfterRefresh() {
                         if (window.sessionStorage.getItem('Token')) {
                                 this.token = window.sessionStorage.getItem('Token');
+                                window.sessionStorage.clear();
                                 axios.get(import.meta.env.VITE_URL_API + 'api/auth/login/refresh',
                                         {
-                                                headers: { 'Authorization': this.getauthorization }
+                                                headers: { 'Authorization': this.getAuthorization }
 
                                         })
                                         .then((response: ResCustom<ResLoginValidRequest>) => {
@@ -113,7 +114,7 @@ export const useStoreUser = defineStore({
                                 fD.append('image', tab[0]);
                                 axios.put(import.meta.env.VITE_URL_API + 'api/auth/avatar', fD, {
                                         headers: {
-                                                'Authorization': this.getauthorization,
+                                                'Authorization': this.getAuthorization,
                                                 "Content-Type": "multipart/form-data"
                                         }
                                 })

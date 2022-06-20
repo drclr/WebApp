@@ -35,20 +35,20 @@ export const useStoreArticles = defineStore({
   } as StateArticles),
   getters: { //to obtain all user articles
     getUserArticles(): Article[] {
-      return this.articles.filter(e => e.idarticlewriter === store.userId)
+      return this.articles.filter(e => e.idArticleWriter === store.userId)
     }
   },
   actions: {
     async loadArticles() {
-      await axios.get(import.meta.env.VITE_URL_API + 'api/auth/article/all', { headers: { 'Authorization': store.getauthorization } })
+      await axios.get(import.meta.env.VITE_URL_API + 'api/auth/articles', { headers: { 'Authorization': store.getAuthorization } })
         .then((res: ResCustom<dataTabObjectArticles>) => {
           if (res.data) {
             this.$reset();
             for (const i in res.data) {
               const a: Article = {
-                idarticlewriter: res.data[i].UserModelId,
+                idArticleWriter: res.data[i].UserModelId,
                 idArticle: res.data[i].id,
-                id_iteration: Number(i),
+                idIteration: Number(i),
                 title: res.data[i].title,
                 content: res.data[i].content,
                 writer: res.data[i].UserModel.firstname + " " + res.data[i].UserModel.lastname,
@@ -61,8 +61,8 @@ export const useStoreArticles = defineStore({
         .catch((err: Error) => console.log(err))
     },
     supprArticle(idArticle: number) {
-      axios.delete(import.meta.env.VITE_URL_API + 'api/auth/article/delete', {
-        headers: { 'Authorization': store.getauthorization },
+      axios.delete(import.meta.env.VITE_URL_API + 'api/auth/article', {
+        headers: { 'Authorization': store.getAuthorization },
         data: { idarticle: idArticle }
       })
         .catch((err) => console.log(err));

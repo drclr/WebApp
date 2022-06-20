@@ -26,7 +26,7 @@
       </div>
 
       <v-card id="container-views">
-        <v-tabs fixed-tabs v-model="t_tab">
+        <v-tabs fixed-tabs v-model="tab">
           <v-tab class="titleTab" value="one">
             <v-icon aria-label="Paramètres du compte" icon="mdi-account"></v-icon>
             <span v-if="display.mdAndUp.value"> Paramètres du compte </span>
@@ -48,7 +48,7 @@
         </v-tabs>
 
         <v-card-text>
-          <v-window v-model="t_tab">
+          <v-window v-model="tab">
             <v-window-item id="one" value="one">
 
               <label id="label-input" for="input">Modifier votre photo de profil : </label>
@@ -66,10 +66,10 @@
                     mot de passe :</label>
                   <input class="formApp__input formApp__input--blue-border" id="inputNewpasswordAccount"
                     v-model="newpassword" type="password" minlength="8" maxlength="15" required />
-                  <label class="formApp__label" for="inputConf_newpasswordAccount">Confirmer votre
+                  <label class="formApp__label" for="inputconfNewpasswordAccount">Confirmer votre
                     nouveau mot de passe :</label>
-                  <input class="formApp__input formApp__input--blue-border" id="inputConf_newpasswordAccount"
-                    v-model="conf_newpassword" type="password" minlength="8" maxlength="15" required />
+                  <input class="formApp__input formApp__input--blue-border" id="inputconfNewpasswordAccount"
+                    v-model="confNewpassword" type="password" minlength="8" maxlength="15" required />
                   <p class="formApp__message--error" v-if="error.status === 'on'">
                     {{
                         error.message
@@ -85,7 +85,7 @@
                   </ButtonApp>
                 </form>
               </FormCardApp>
-              <v-btn id="content__supprbutton" @click="ToSupprAccount">Supprimer le compte</v-btn>
+              <v-btn id="content__supprbutton" @click="supprAccount">Supprimer le compte</v-btn>
 
             </v-window-item>
 
@@ -93,7 +93,7 @@
 
 
               <CardArticle width="100%" class="articlesUser" v-for="i in tabArticles"
-                :idarticlewriter="i.idarticlewriter" :idArticle="i.idArticle" :key="i.id_iteration" :title="i.title"
+                :idArticleWriter="i.idArticleWriter" :idArticle="i.idArticle" :key="i.idIteration" :title="i.title"
                 :content="i.content" :writer="i.writer" :date="i.date">
               </CardArticle>
 
@@ -184,15 +184,15 @@ const store = useStoreUser();
 
 const password = ref('');
 const newpassword = ref('');
-const conf_newpassword = ref('');
+const confNewpassword = ref('');
 const files = ref<File[]>([]);
-const t_tab = ref(null);
+const tab = ref(null);
 
 const tabArticles = ref(storeArticles.getUserArticles);
 
 const tabCommentsUser = ref<CommentsUserToDisplay[]>([]);
 
-onMounted(() => ToGetCommentsUser());
+onMounted(() => getCommentsUser());
 
 const error = reactive({
   status: 'off',
@@ -216,12 +216,12 @@ function toModifyPassword() {
   }
 
 
-  if (newpassword.value === conf_newpassword.value) {
+  if (newpassword.value === confNewpassword.value) {
     if (useCheckPassword(newpassword.value)) {
-      axios.put(import.meta.env.VITE_URL_API + 'api/auth//modifypassword', {
+      axios.put(import.meta.env.VITE_URL_API + 'api/auth/password', {
         password: password.value,
         newpassword: newpassword.value
-      }, { headers: { 'Authorization': store.getauthorization } })
+      }, { headers: { 'Authorization': store.getAuthorization } })
         .then((res: ResCustom<ResModifyPassword>) => {
           if (res.data.message) {
             updatedPassword.status = 'on';
@@ -229,7 +229,7 @@ function toModifyPassword() {
             //form reset
             password.value = '';
             newpassword.value = '';
-            conf_newpassword.value = '';
+            confNewpassword.value = '';
 
 
           }
@@ -259,14 +259,14 @@ function toModifyPassword() {
 
 }
 
-function ToSupprAccount() {
-  axios.delete(import.meta.env.VITE_URL_API + 'api/auth/deleteaccount', { headers: { 'Authorization': store.getauthorization } })
+function supprAccount() {
+  axios.delete(import.meta.env.VITE_URL_API + 'api/auth/account', { headers: { 'Authorization': store.getAuthorization } })
     .then(() => router.replace({ path: '/', hash: '#logout' }))
 }
 
 
-function ToGetCommentsUser() {
-  axios.get(import.meta.env.VITE_URL_API + 'api/auth/comment/all/user', { headers: { 'Authorization': store.getauthorization } })
+function getCommentsUser() {
+  axios.get(import.meta.env.VITE_URL_API + 'api/auth/user/comments', { headers: { 'Authorization': store.getAuthorization } })
     .then(function (res: ResCustom<dataResGetCommentsOneUser>) {
       for (const i in res.data) {
         const Com: CommentsUserToDisplay = {
@@ -295,7 +295,7 @@ function ToUpdateTabCommentsUser(idComment: number) {
 
 <style lang= "scss" scoped>
 #container-views {
-  background-color: rgb(255, 248, 243) //seashell;
+  background-color: rgb(255, 248, 243);
 }
 
 .card-comment {

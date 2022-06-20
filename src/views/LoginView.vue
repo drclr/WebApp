@@ -15,7 +15,7 @@
                                 </p>
                                 <ButtonApp class="button-app--white" title="Se connecter"></ButtonApp>
                         </form>
-                        <RouterLink class="linktoswitch" to="/register">Créer un compte</RouterLink>
+                        <RouterLink class="linkToSwitch" to="/register">Créer un compte</RouterLink>
                 </FormCardApp>
         </div>
 </template>

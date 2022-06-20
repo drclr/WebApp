@@ -28,7 +28,7 @@ const props = defineProps({
   content: { type: String, required: true },
   writer: { type: String, required: true },
   date: { type: String, required: true },
-  idarticlewriter: { type: Number, required: true },
+  idArticleWriter: { type: Number, required: true },
   idArticle: { type: Number, required: true }
 })
 

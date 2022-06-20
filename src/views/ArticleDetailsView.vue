@@ -22,11 +22,11 @@
         Commenter
 
       </v-btn>
-      <v-btn v-if="status_action === 'on'" :to="{ name: 'article-edit', params: { id: route.params.id } }"
+      <v-btn v-if="statusAction === 'on'" :to="{ name: 'article-edit', params: { id: route.params.id } }"
         class="card-article-details__btn" size="x-small">
         modifier</v-btn>
 
-      <v-btn v-if="status_action === 'on'" class="card-article-details__btn" to="/socialapp/thread" size="x-small"
+      <v-btn v-if="statusAction === 'on'" class="card-article-details__btn" to="/socialapp/thread" size="x-small"
         @click="storeArticles.supprArticle(Number(route.params.id))">
         supprimer
       </v-btn>
@@ -90,7 +90,7 @@ const route = useRoute();
 
 const article = ref(storeArticles.getOneArticle(Number(route.params.id)));
 onMounted(() => storeComments.getCommentsOneArticle(Number(route.params.id)));
-const status_action = computed(() => article.value ? article.value.idarticlewriter === store.userId || store.IsAdmin === true ? 'on' : 'off' : 'off');
+const statusAction = computed(() => article.value ? article.value.idArticleWriter === store.userId || store.IsAdmin === true ? 'on' : 'off' : 'off');
 
 function top() {
   window.scrollTo(0, 0);

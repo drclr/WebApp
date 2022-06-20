@@ -1,7 +1,7 @@
 export type Article = {
-  idarticlewriter: number,
+  idArticleWriter: number,
   idArticle: number,
-  id_iteration: number,
+  idIteration: number,
   title: string,
   content: string,
   writer: string,
